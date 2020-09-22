@@ -10,17 +10,22 @@ import ReactDOM from 'react-dom';
 import Header, { messages as headerMessages } from '@edx/frontend-component-header';
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
 
+import { Route } from 'react-router';
 import appMessages from './i18n';
-import ExamplePage from './example/ExamplePage';
+import OraDashboardContainer from './ora-dashboard/OraDashboardContainer';
+import { Routes } from './data/constants';
+import store from './store';
 
 import './index.scss';
 import './assets/favicon.ico';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <AppProvider>
+    <AppProvider store={store}>
       <Header />
-      <ExamplePage />
+      <Route path={Routes.HOME}>
+        <OraDashboardContainer />
+      </Route>
       <Footer />
     </AppProvider>,
     document.getElementById('root'),
@@ -37,4 +42,5 @@ initialize({
     headerMessages,
     footerMessages,
   ],
+  requireAuthenticatedUser: true,
 });
